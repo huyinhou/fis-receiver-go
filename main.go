@@ -14,6 +14,7 @@ import (
 )
 
 type ReceiverOptions struct {
+	Host string
 	Port int
 }
 
@@ -68,12 +69,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+	glog.V(4).Infof("%s saved.", saveto)
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("1"))
 }
 
 func (o *ReceiverOptions) addFlags(fs *pflag.FlagSet) {
-	fs.IntVarP(&o.Port, "port", "p", 8200, "receiver port")
+	fs.IntVarP(&o.Port, "port", "p", 8200, "监听端口")
+	fs.StringVarP(&o.Host, "listen", "l", "0.0.0.0", "监听地址")
 }
 
 func startServer(o *ReceiverOptions) {
@@ -81,7 +84,7 @@ func startServer(o *ReceiverOptions) {
 	router.HandleFunc("/", handler)
 	mux := http.NewServeMux()
 	mux.Handle("/", router)
-	http.ListenAndServe(fmt.Sprintf(":%d", o.Port), mux)
+	http.ListenAndServe(fmt.Sprintf("%s:%d", o.Host, o.Port), mux)
 }
 
 func initFlags() {
