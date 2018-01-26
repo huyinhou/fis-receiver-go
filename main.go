@@ -56,7 +56,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	outfile, err := os.OpenFile(saveto, os.O_CREATE|os.O_WRONLY, 0644)
+	outfile, err := os.OpenFile(saveto, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
 	if err != nil {
 		glog.Errorf("create file %s failed. error: %v", saveto, err)
 		w.WriteHeader(http.StatusInternalServerError)
