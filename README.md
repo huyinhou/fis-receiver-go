@@ -11,3 +11,8 @@ $ glide get github.com/gorilla/mux
 ```
 ## 参考文档
 [fis发布到远端机器](http://fis.baidu.com/fis3/docs/beginning/debug.html#%E5%8F%91%E5%B8%83%E5%88%B0%E8%BF%9C%E7%AB%AF%E6%9C%BA%E5%99%A8)
+
+## curl测试
+```
+curl localhost:8080/ -F "file=@get-pip.py" -F "to=/Users/huyinhou/work/get-pip.py"
+```
