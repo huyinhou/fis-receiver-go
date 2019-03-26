@@ -63,6 +63,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+	defer outfile.Close()
 	_, err = io.Copy(outfile, infile)
 	if err != nil {
 		glog.Error("copy file failed: ", err)
